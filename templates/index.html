@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="my-4 text-center">Lista de Clientes</h1>
+        <div class="btn btn-sucsess">
+            <a href="{{ url_for('add_client') }}">Adicionar Novo Cliente</a>
+        </div>
+
+        <ul class="list-group">
+            {% for client in clients %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ client.name }}</strong> <br>
+                    <small>Email: {{ client.email }}</small> <br>
+                    <small>Telefone: {{ client.phone }}</small> <br>
+                    <small>Endereço: {{ client.adress }}</small>
+                </div>
+
+                <div>
+                    <a href="{{ url_for('edit_client', id=client.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ url_for('delete_client', id=client.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este cliente?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    </form>
+                </div>
+            </li>
+            {% else %}
+            <li class="list-group-item text-center">Nenhum cliente encontrado.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
